@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,9 +10,9 @@ import java.util.Stack;
 
 public class Inventory {
 	private Map<String, Stack<Item>> contents = new HashMap<>();
-	private File file = new File(path); //need to add a path that will be correct on all devices
+	private File file = new File("vendingmachine.csv"); //need to add a path that will be correct on all devices
 	
-	public Inventory() {
+	public Inventory() throws FileNotFoundException {
 		
 		Scanner fileReader = new Scanner(file);
 		
@@ -25,28 +26,33 @@ public class Inventory {
 			String type = fileLineArray[3];
 			
 			if (contents.containsKey(code) == false) {
-				Stack stack = new Stack();
+				Stack<Item> stack = new Stack<>();
 				contents.put(code, stack);
 			}
 			
-			if (type.equals("Chip")) {Chip newItem = new Chip(name, price);}
-			else if (type.equals("Candy")) {Candy newItem = new Candy(name, price);}
-			else if (type.equals("Gum")) {Gum newItem = new Gum(name, price);}
-			else if (type.equals("Drink")) {Drink newItem = new Drink(name, price);}
+			Item newItem;
+			
+			if (type.equals("Chip")) {newItem = new Chip(name, price);}
+			else if (type.equals("Candy")) {newItem = new Candy(name, price);}
+			else if (type.equals("Gum")) {newItem = new Gum(name, price);}
+			else if (type.equals("Drink")) {newItem = new Drink(name, price);}
+			else newItem = null;
+		
 			
 			
-			contents.get(code).push(newItem);
+			if (newItem != null) {contents.get(code).push(newItem);}
 				
 		}
 		
 	}
 
-	public Map<String, Stack> getContents() {
+	public Map<String, Stack<Item>> getContents() {
 		return contents;
 	}
 	
 	public Item popItem(String code) {
-		contents.get(code).pop();
+		Item returnItem = contents.get(code).pop();
+		return returnItem;
 	}
 	
 	public void printContents() {
@@ -55,7 +61,7 @@ public class Inventory {
 			if (contents.get(key).isEmpty() == false) {
 			
 			String printLine = "";
-			printline += key " | " + contents.get(key).peek().getName() + " | " + contents.get(key).peek().getPrice() + " | " + contents.get(key).peek().getName() // print key | .getName | .getPrice | get Stack Size
+			printLine += key + " | " + contents.get(key).peek().getName() + " | " + contents.get(key).peek().getPrice(); // print key | .getName | .getPrice
 			System.out.println(printLine);
 			
 			}
