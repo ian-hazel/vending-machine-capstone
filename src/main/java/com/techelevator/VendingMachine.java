@@ -18,6 +18,9 @@ public class VendingMachine {
 		
 		//startMenu displays first options
 		startMenu();
+		
+		
+		
 
 		
 		

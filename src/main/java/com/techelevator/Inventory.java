@@ -83,7 +83,7 @@ public class Inventory {
 					System.out.println(fileLine + " SOLD OUT");
 				}
 				
-				else { System.out.println(fileLine + " " + contents.get(code).size());
+				else { System.out.println(fileLine + " Quantity: " + contents.get(code).size());
 				}
 			}
 		
