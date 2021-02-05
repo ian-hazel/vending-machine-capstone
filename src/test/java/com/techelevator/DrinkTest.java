@@ -9,7 +9,7 @@ public class DrinkTest {
 		
 	@Before
 	public void reinstantiate() {
-	this.objectUnderTest = new Drink("Diet Coke", new BigDecimal(1.25));
+	this.objectUnderTest = new Drink("Diet Coke", new BigDecimal("1.25"));
 	}
 	
 	@Test
@@ -20,7 +20,7 @@ public class DrinkTest {
 	
 	@Test
 	public void test_getPrice() {
-		Assert.assertEquals(new BigDecimal(1.25), objectUnderTest.getPrice());
+		Assert.assertEquals(new BigDecimal("1.25"), objectUnderTest.getPrice());
 	}
 	
 	@Test

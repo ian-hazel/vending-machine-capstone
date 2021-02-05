@@ -9,7 +9,7 @@ public class CandyTest {
 		
 	@Before
 	public void reinstantiate() {
-	this.objectUnderTest = new Candy("Reeses", new BigDecimal(2.25));
+	this.objectUnderTest = new Candy("Reeses", new BigDecimal("2.25"));
 	}
 	
 	@Test
@@ -20,7 +20,7 @@ public class CandyTest {
 	
 	@Test
 	public void test_getPrice() {
-		Assert.assertEquals(new BigDecimal(2.25), objectUnderTest.getPrice());
+		Assert.assertEquals(new BigDecimal("2.25"), objectUnderTest.getPrice());
 	}
 	
 	@Test

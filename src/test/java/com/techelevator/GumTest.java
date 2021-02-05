@@ -9,7 +9,7 @@ public class GumTest {
 		
 	@Before
 	public void reinstantiate() {
-	this.objectUnderTest = new Gum("Big Red", new BigDecimal(1.20));
+	this.objectUnderTest = new Gum("Big Red", new BigDecimal("1.20"));
 	}
 	
 	@Test
@@ -20,7 +20,7 @@ public class GumTest {
 	
 	@Test
 	public void test_getPrice() {
-		Assert.assertEquals(new BigDecimal(1.20), objectUnderTest.getPrice());
+		Assert.assertEquals(new BigDecimal("1.20"), objectUnderTest.getPrice());
 	}
 	
 	@Test

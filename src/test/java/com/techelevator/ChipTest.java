@@ -9,7 +9,7 @@ public class ChipTest {
 		
 	@Before
 	public void reinstantiate() {
-	this.objectUnderTest = new Chip("Pringles", new BigDecimal(3.05));
+	this.objectUnderTest = new Chip("Pringles", new BigDecimal("3.05"));
 	}
 	
 	@Test
@@ -20,7 +20,7 @@ public class ChipTest {
 	
 	@Test
 	public void test_getPrice() {
-		Assert.assertEquals(new BigDecimal(3.05), objectUnderTest.getPrice());
+		Assert.assertEquals(new BigDecimal("3.05"), objectUnderTest.getPrice());
 	}
 	
 	@Test
