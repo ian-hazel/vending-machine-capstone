@@ -22,11 +22,7 @@ public class VendingMachine {
 		startMenu();
 		
 		
-		
-
-		
-		
-		
+	
 	}
 	
 	

@@ -11,7 +11,7 @@ import java.util.Stack;
 
 public class Inventory {
 	private Map<String, Stack<Item>> contents = new HashMap<>();
-	private File file = new File("vendingmachine.csv"); //need to add a path that will be correct on all devices
+	private File file = new File("vendingmachine.csv");
 	
 	public Inventory() throws FileNotFoundException {
 		
@@ -64,7 +64,7 @@ public class Inventory {
 			return returnItem;
 		} catch (EmptyStackException e) {
 			return null;
-		}
+		} 
 	}
 	
 	public void printContents() throws FileNotFoundException {
@@ -79,12 +79,20 @@ public class Inventory {
 //				BigDecimal price = new BigDecimal(fileLineArray[2]);
 //				String type = fileLineArray[3];
 				
-				if (contents.get(code) == null || contents.get(code).peek() == null) {
+//				if (contents.get(code) == null || contents.get(code).peek() == null) {
+//					System.out.println(fileLine + " SOLD OUT");
+//				}
+				
+				try { 
+					System.out.println(fileLine + " Quantity: " + contents.get(code).size());
+				}
+				catch(EmptyStackException e) {
+					
 					System.out.println(fileLine + " SOLD OUT");
+					
+					
 				}
 				
-				else { System.out.println(fileLine + " Quantity: " + contents.get(code).size());
-				}
 			}
 		
 		
