@@ -208,6 +208,8 @@ public class VendingMachine {
 	
 	public static void finishTransaction() {
 		//return change
+		System.out.println("Change dispensed: $" + balance);
+		
 		BigDecimal quarterValue = new BigDecimal("0.25");
 		int quarters = 0;
 		
@@ -219,24 +221,23 @@ public class VendingMachine {
 		
 		while(balance.compareTo(quarterValue) >= 0) {
 			quarters++;
-			balance.subtract(quarterValue);
+			balance = balance.subtract(quarterValue);
 		}
 		
 		while(balance.compareTo(dimeValue) >= 0) {
 			dimes++;
-			balance.subtract(dimeValue);
+			balance = balance.subtract(dimeValue);
 		}
 		
 		while(balance.compareTo(nickelValue) >= 0) {
 			nickels++;
-			balance.subtract(nickelValue);
+			balance = balance.subtract(nickelValue);
 		}
 		
-		System.out.println("Change dispensed: $" + balance);
 		System.out.println("Quarters: " + quarters + ", " + "Dimes: " + dimes + ", " + "Nickels: " + nickels);
 		
 		//zero out balance
-		balance.subtract(balance);
+		balance = balance.subtract(balance);
 		//run thankYou() to end
 		thankYou();
 	}
