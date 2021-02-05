@@ -167,6 +167,9 @@ public class VendingMachine {
 		
 		//do we need to make sure the key exists in the map?
 		
+		//if (balance < inventory.getContents(userChoice)) {
+			
+	//	}
 		Item dispensedItem = inventory.popItem(userChoice);
 		
 		if (dispensedItem != null) {
@@ -185,6 +188,11 @@ public class VendingMachine {
 			System.out.println("=========================================");
 			purchaseItem();
 		}
+	}
+	
+	public static void finishTransaction() {
+		//finish out and close
+		//run thankYou() to end
 	}
 
 

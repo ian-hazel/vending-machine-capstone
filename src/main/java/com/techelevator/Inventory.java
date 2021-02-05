@@ -83,20 +83,13 @@ public class Inventory {
 //					System.out.println(fileLine + " SOLD OUT");
 //				}
 				
-				try {
-					if (contents.get(code).size() == 0) {
-						System.out.println(fileLine + " Quantity: " + "SOLD OUT");
-					}
-					else {
-						System.out.println(fileLine + " Quantity: " + contents.get(code).size());
-					}
+				if (contents.get(code).size() == 0) {
+					System.out.println(fileLine + " Quantity: " + "SOLD OUT");
 				}
-				catch(EmptyStackException e) {
-					
-					System.out.println(fileLine + " SOLD OUT");
-					
-					
+				else {
+					System.out.println(fileLine + " Quantity: " + contents.get(code).size());
 				}
+
 				
 			}
 		
