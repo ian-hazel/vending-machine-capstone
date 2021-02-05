@@ -140,6 +140,7 @@ public class VendingMachine {
 		}
 		else {
 			System.out.println("Invalid input!");
+			System.out.println("=========================================");
 			feedMoney();
 		}
 		
@@ -156,8 +157,13 @@ public class VendingMachine {
 		}
 		
 		System.out.println("What snack strikes your fancy today?");
+		System.out.println("====== Or press \"X\" to exit ======");
 		
 		String userChoice = itemChoice.nextLine();
+		
+		if (userChoice.toLowerCase().equals("x")) {
+			purchaseMenu();
+		}
 		
 		//do we need to make sure the key exists in the map?
 		
@@ -176,6 +182,7 @@ public class VendingMachine {
 		}
 		else {
 			System.out.println("Invalid selection!");
+			System.out.println("=========================================");
 			purchaseItem();
 		}
 	}
