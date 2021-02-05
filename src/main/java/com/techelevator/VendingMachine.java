@@ -1,18 +1,20 @@
 package com.techelevator;
 
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class VendingMachine {
 
 	private static Inventory inventory;
+	private static BigDecimal balance = new BigDecimal("0.00");
 	
 	//main method goes here
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		
 		//Construct new inventory
-		Inventory inventory = new Inventory();
+		inventory = new Inventory();
 
 		
 		//invoke greeting/welcome banner
@@ -50,23 +52,28 @@ public class VendingMachine {
 	*/
 	
 	public static void startMenu() {
-		Scanner startMenuOptions = new Scanner(System.in);
+		Scanner startMenuChoice = new Scanner(System.in);
 		
 		System.out.println("> (1) Display Vending Machine Items");
 		System.out.println("> (2) Purchase");
 		System.out.println("> (3) Exit");
 		
-		String userChoice = startMenuOptions.nextLine();
+		//refactor as while loop w/ while input != 2 || 3
+		
+		String userChoice = startMenuChoice.nextLine();
 		
 		if (userChoice.equals("1")) {
 			try {
 				inventory.printContents();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace(); //maybe change?? 
-			}	
+			}
+			System.out.println();
+			startMenu();
 			
 		}
 		else if (userChoice.equals("2")) {
+			purchaseMenu();
 			//take user to purchase steps
 			//new method advances program
 		}
@@ -79,6 +86,105 @@ public class VendingMachine {
 		}
 	}
 	
+	
+	public static void purchaseMenu() {
+		//balance = new BigDecimal("0.00");
+		
+		Scanner purchaseMenuChoice = new Scanner(System.in);
+		
+		System.out.println("> (1) Feed Money");
+		System.out.println("> (2) Select Product");
+		System.out.println("> (3) Finish Transaction");
+		
+		String userPurchaseChoice = purchaseMenuChoice.nextLine();
+		
+		if (userPurchaseChoice.equals("1")) {
+			feedMoney();
+			//need way back to menu
+		}
+		else if (userPurchaseChoice.equals("2")) {
+			purchaseItem();
+			//do something else
+		}
+		else if (userPurchaseChoice.equals("3")) {
+			//do the third thing
+		}
+		else {
+			System.out.println("Invalid input!");
+			purchaseMenu();
+		}
+		
+		
+	}
+	
+	public static void feedMoney() {
+		Scanner insertMoney = new Scanner(System.in);
+		
+		System.out.println("Your balance is $" + balance);
+		System.out.println();
+		
+		System.out.println("> (1) Insert $1");
+		System.out.println("> (2) Insert $2");
+		System.out.println("> (5) Insert $5");
+		System.out.println("> (10) Insert $10");
+		System.out.println("> (X) Done inserting.");
+		
+		String dollaDollaBillsYall = insertMoney.nextLine();
+		
+		if (dollaDollaBillsYall.equals("1") || dollaDollaBillsYall.equals("2") || dollaDollaBillsYall.equals("5") || dollaDollaBillsYall.equals("10")) {
+			balance = balance.add(new BigDecimal(dollaDollaBillsYall));
+			feedMoney();
+		}
+		else if (dollaDollaBillsYall.toLowerCase().equals("x")) {
+			purchaseMenu();
+		}
+		else if (dollaDollaBillsYall.equals("20")) {
+			System.out.println("This machine doesn't take $20s!!");
+			feedMoney();
+		}
+		else {
+			System.out.println("Invalid input!");
+			feedMoney();
+		}
+		
+	}
+	
+	
+	public static void purchaseItem() {
+		Scanner itemChoice = new Scanner(System.in);
+		
+		try {
+			inventory.printContents();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace(); //maybe change per earlier??
+		}
+		
+		System.out.println("What snack strikes your fancy today?");
+		
+		String userChoice = itemChoice.nextLine();
+		
+		//do we need to make sure the key exists in the map?
+		
+		Item dispensedItem = inventory.popItem(userChoice);
+		
+		if (dispensedItem != null) {
+			System.out.println(dispensedItem.getName());
+			System.out.println(dispensedItem.getPrice());
+			
+			balance = balance.subtract(dispensedItem.getPrice());
+			System.out.println("Your balance is $" + balance);
+			
+			System.out.println(dispensedItem.getSound());
+			
+			purchaseMenu();
+		}
+		else {
+			System.out.println("Invalid selection!");
+			purchaseItem();
+		}
+	}
+
+
 	public static void thankYou() {
 		System.out.println("Thank you for using VENDO-MATIC 800!");
 		System.out.println("===== Please enjoy again soon! =====");
