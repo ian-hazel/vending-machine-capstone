@@ -191,14 +191,46 @@ public class VendingMachine {
 	}
 	
 	public static void finishTransaction() {
-		//finish out and close
+		//return change
+		BigDecimal quarterValue = new BigDecimal("0.25");
+		int quarters = 0;
+		
+		BigDecimal dimeValue = new BigDecimal("0.10");
+		int dimes = 0;
+		
+		BigDecimal nickelValue = new BigDecimal("0.05");
+		int nickels = 0;
+		
+		while(balance.compareTo(quarterValue) >= 0) {
+			quarters++;
+			balance.subtract(quarterValue);
+		}
+		
+		while(balance.compareTo(dimeValue) >= 0) {
+			dimes++;
+			balance.subtract(dimeValue);
+		}
+		
+		while(balance.compareTo(nickelValue) >= 0) {
+			nickels++;
+			balance.subtract(nickelValue);
+		}
+		
+		System.out.println("Change dispensed:");
+		System.out.println("Quarters: " + quarters);
+		System.out.println("Dimes: " + dimes);
+		System.out.println("Nickels: " + nickels);
+		
+		//zero out balance
+		balance.subtract(balance);
 		//run thankYou() to end
+		thankYou();
 	}
 
 
 	public static void thankYou() {
 		System.out.println("Thank you for using VENDO-MATIC 800!");
 		System.out.println("===== Please enjoy again soon! =====");
-		System.exit(0);	
+		startMenu();	
 	}
 }
