@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class VendingMachine {
 
+	private static Inventory inventory;
 	
 	//main method goes here
 	public static void main(String[] args) throws FileNotFoundException {
@@ -12,6 +13,7 @@ public class VendingMachine {
 		
 		//Construct new inventory
 		Inventory inventory = new Inventory();
+
 		
 		//invoke greeting/welcome banner
 		welcomeBanner();
@@ -57,8 +59,12 @@ public class VendingMachine {
 		String userChoice = startMenuOptions.nextLine();
 		
 		if (userChoice.equals("1")) {
-			// include code to display items + quantity
-			//new method goes here
+			try {
+				inventory.printContents();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace(); //maybe change?? 
+			}	
+			
 		}
 		else if (userChoice.equals("2")) {
 			//take user to purchase steps
