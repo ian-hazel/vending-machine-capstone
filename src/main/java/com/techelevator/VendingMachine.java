@@ -8,6 +8,7 @@ public class VendingMachine {
 
 	private static Inventory inventory;
 	private static BigDecimal balance = new BigDecimal("0.00");
+	private static Scanner keyboardInput = new Scanner(System.in);
 	
 	//main method goes here
 	public static void main(String[] args) throws FileNotFoundException {
@@ -48,7 +49,6 @@ public class VendingMachine {
 	*/
 	
 	public static void startMenu() {
-		Scanner startMenuChoice = new Scanner(System.in);
 		
 		System.out.println("> (1) Display Vending Machine Items");
 		System.out.println("> (2) Purchase");
@@ -56,7 +56,7 @@ public class VendingMachine {
 		
 		//refactor as while loop w/ while input != 2 || 3
 		
-		String userChoice = startMenuChoice.nextLine();
+		String userChoice = keyboardInput.nextLine();
 		
 		if (userChoice.equals("1")) {
 			try {
@@ -86,13 +86,13 @@ public class VendingMachine {
 	public static void purchaseMenu() {
 		//balance = new BigDecimal("0.00");
 		
-		Scanner purchaseMenuChoice = new Scanner(System.in);
+		//Scanner purchaseMenuChoice = new Scanner(System.in);
 		
 		System.out.println("> (1) Feed Money");
 		System.out.println("> (2) Select Product");
 		System.out.println("> (3) Finish Transaction");
 		
-		String userPurchaseChoice = purchaseMenuChoice.nextLine();
+		String userPurchaseChoice = keyboardInput.nextLine();
 		
 		if (userPurchaseChoice.equals("1")) {
 			feedMoney();
@@ -103,6 +103,8 @@ public class VendingMachine {
 			//do something else
 		}
 		else if (userPurchaseChoice.equals("3")) {
+			finishTransaction();
+
 			//do the third thing
 		}
 		else {
@@ -114,7 +116,7 @@ public class VendingMachine {
 	}
 	
 	public static void feedMoney() {
-		Scanner insertMoney = new Scanner(System.in);
+		//Scanner insertMoney = new Scanner(System.in);
 		
 		System.out.println("Your balance is $" + balance);
 		System.out.println();
@@ -125,7 +127,7 @@ public class VendingMachine {
 		System.out.println("> (10) Insert $10");
 		System.out.println("> (X) Done inserting.");
 		
-		String dollaDollaBillsYall = insertMoney.nextLine();
+		String dollaDollaBillsYall = keyboardInput.nextLine();
 		
 		if (dollaDollaBillsYall.equals("1") || dollaDollaBillsYall.equals("2") || dollaDollaBillsYall.equals("5") || dollaDollaBillsYall.equals("10")) {
 			balance = balance.add(new BigDecimal(dollaDollaBillsYall));
@@ -148,7 +150,7 @@ public class VendingMachine {
 	
 	
 	public static void purchaseItem() {
-		Scanner itemChoice = new Scanner(System.in);
+		//Scanner itemChoice = new Scanner(System.in);
 		
 		try {
 			inventory.printContents();
@@ -159,7 +161,7 @@ public class VendingMachine {
 		System.out.println("What snack strikes your fancy today?");
 		System.out.println("====== Or press \"X\" to exit ======");
 		
-		String userChoice = itemChoice.nextLine();
+		String userChoice = keyboardInput.nextLine();
 		
 		userChoice = userChoice.toUpperCase(); //allows "a4" input
 		
@@ -230,10 +232,8 @@ public class VendingMachine {
 			balance.subtract(nickelValue);
 		}
 		
-		System.out.println("Change dispensed:");
-		System.out.println("Quarters: " + quarters);
-		System.out.println("Dimes: " + dimes);
-		System.out.println("Nickels: " + nickels);
+		System.out.println("Change dispensed: $" + balance);
+		System.out.println("Quarters: " + quarters + ", " + "Dimes: " + dimes + ", " + "Nickels: " + nickels);
 		
 		//zero out balance
 		balance.subtract(balance);
@@ -245,6 +245,11 @@ public class VendingMachine {
 	public static void thankYou() {
 		System.out.println("Thank you for using VENDO-MATIC 800!");
 		System.out.println("===== Please enjoy again soon! =====");
+		System.out.println();
+		System.out.println();
+		welcomeBanner();
+		System.out.println();
+		System.out.println();
 		startMenu();	
 	}
 }
