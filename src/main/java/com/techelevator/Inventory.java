@@ -3,6 +3,7 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,11 +19,11 @@ public class Inventory {
 		
 		while(fileReader.hasNextLine()) {
 			String fileLine = fileReader.nextLine();
-			String[] fileLineArray = fileLine.split("|");
+			String[] fileLineArray = fileLine.split("\\|");
 			
 			String code = fileLineArray[0];
 			String name = fileLineArray[1];
-			BigDecimal price = new BigDecimal(Double.parseDouble(fileLineArray[2]));
+			BigDecimal price = new BigDecimal(fileLineArray[2]);
 			String type = fileLineArray[3];
 			
 			if (contents.containsKey(code) == false) {
@@ -51,8 +52,12 @@ public class Inventory {
 	}
 	
 	public Item popItem(String code) {
-		Item returnItem = contents.get(code).pop();
-		return returnItem;
+		try {
+			Item returnItem = contents.get(code).pop();
+			return returnItem;
+		} catch (EmptyStackException e) {
+			return null;
+		}
 	}
 	
 	public void printContents() {
