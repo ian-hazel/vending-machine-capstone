@@ -161,27 +161,41 @@ public class VendingMachine {
 		
 		String userChoice = itemChoice.nextLine();
 		
+		userChoice = userChoice.toUpperCase(); //allows "a4" input
+		
 		if (userChoice.toLowerCase().equals("x")) {
 			purchaseMenu();
 		}
 		
-		//do we need to make sure the key exists in the map?
+		//if the user chooses something that isn't in the map
+		if (!inventory.getContents().containsKey(userChoice)) {
+			System.out.println("Invalid selection!");
+			System.out.println("=========================================");
+			purchaseItem();
+		}
+
 		
-		//if (balance < inventory.getContents(userChoice)) {
-			
-	//	}
 		Item dispensedItem = inventory.popItem(userChoice);
 		
 		if (dispensedItem != null) {
-			System.out.println(dispensedItem.getName());
-			System.out.println(dispensedItem.getPrice());
-			
-			balance = balance.subtract(dispensedItem.getPrice());
-			System.out.println("Your balance is $" + balance);
-			
-			System.out.println(dispensedItem.getSound());
-			
-			purchaseMenu();
+			//determines if balance covers the cost of options
+			if (balance.compareTo(inventory.getContents().get(userChoice).peek().getPrice()) > 0) {
+				System.out.println(dispensedItem.getName());
+				System.out.println(dispensedItem.getPrice());
+				
+				balance = balance.subtract(dispensedItem.getPrice());
+				System.out.println("Your balance is $" + balance);
+				
+				System.out.println(dispensedItem.getSound());
+				
+				purchaseMenu();
+			}
+			else {
+				System.out.println("You do not have enough balance to buy that!");
+				System.out.println("======== Please insert more money ========");
+				System.out.println();
+				purchaseItem();
+			}
 		}
 		else {
 			System.out.println("Invalid selection!");
