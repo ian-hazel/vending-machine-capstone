@@ -54,6 +54,27 @@ public class InventoryTests {
 		Assert.assertTrue(result.getClass() == expectedReturn.getClass());
 	}
 	
+	
+	@Test
+	public void inventory_fills_stack_with_5_items() throws FileNotFoundException {
+		//Arrange
+		Inventory inventory = new Inventory();
+		Chip expectedReturn = new Chip("Potato Crisps", new BigDecimal("3.05"));
+		
+		
+		//Act
+		inventory.popItem("A1");
+		inventory.popItem("A1");
+		inventory.popItem("A1");
+		inventory.popItem("A1");
+		Item result = inventory.popItem("A1");
+		
+		
+		//Assert
+		Assert.assertTrue("Test expected to return a Chip but did not", result.getClass() == expectedReturn.getClass());
+	}
+	
+	
 	@Test
 	public void popItem_returns_null_when_stack_is_empty() throws FileNotFoundException {
 		//Arrange
