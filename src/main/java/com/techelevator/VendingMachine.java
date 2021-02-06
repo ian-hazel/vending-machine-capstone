@@ -28,7 +28,7 @@ public class VendingMachine {
 		//Construct new inventory
 		inventory = new Inventory();
 		fileWriter = new FileWriter(log, true);
-		PrintWriter printWriter = new PrintWriter(fileWriter);
+		printWriter = new PrintWriter(fileWriter);
 		printWriter.println("\r" + ">" + timeStamp() + " Boot Sequence Initiated");
 		printWriter.flush();
 		
@@ -146,12 +146,12 @@ public class VendingMachine {
 		String dollaDollaBillsYall = keyboardInput.nextLine();
 		
 		if (dollaDollaBillsYall.equals("1") || dollaDollaBillsYall.equals("2") || dollaDollaBillsYall.equals("5") || dollaDollaBillsYall.equals("10")) {
-			BigDecimal billInputValue = new BigDecimal(dollaDollaBillsYall);
+			BigDecimal billInputValue = new BigDecimal(dollaDollaBillsYall + ".00");
 			balance = balance.add(billInputValue);
 			
 			//print out timestamp, action type, amount added, and balance, e.g. 01/01/2016 12:00:00 PM FEED MONEY: $5.00 $5.00
-		//	printWriter.println("\r" + ">" + timeStamp() + " FEED MONEY $" + billInputValue + " $" + balance);
-		//	printWriter.flush();
+			printWriter.println("\r" + ">" + timeStamp() + " FEED MONEY $" + billInputValue + " $" + balance);
+			printWriter.flush();
 			feedMoney();
 		}
 		else if (dollaDollaBillsYall.toLowerCase().equals("x")) {
@@ -214,8 +214,8 @@ public class VendingMachine {
 				System.out.println(dispensedItem.getSound());
 				
 				//print to log: time stamp, item name, item position, starting balance, and balance after purchase  >01/01/2016 12:00:20 PM Crunchie B4 $10.00 $8.50
-		//		printWriter.println("\r" + ">" + timeStamp() + " " + dispensedItem.getName() + " " + userChoice + " $" + preBalance + " $" + balance);
-		//		printWriter.flush();
+				printWriter.println("\r" + ">" + timeStamp() + " " + dispensedItem.getName() + " " + userChoice + " $" + preBalance + " $" + balance);
+				printWriter.flush();
 
 				purchaseMenu();
 			}
@@ -237,7 +237,7 @@ public class VendingMachine {
 	public static void finishTransaction() {
 		//return change
 		System.out.println("Change dispensed: $" + balance);
-		
+
 		BigDecimal preBalance = balance;
 		
 		BigDecimal quarterValue = new BigDecimal("0.25");
@@ -270,8 +270,8 @@ public class VendingMachine {
 		balance = balance.subtract(balance);
 		
 		//print to log timestamp, GIVE CHANGE, their current balance, and end balance $0.00 >01/01/2016 12:01:35 PM GIVE CHANGE: $7.50 $0.00
-	//	printWriter.println("\r" + ">" + timeStamp() + " GIVE CHANGE $" + preBalance + " $" + balance);
-	//	printWriter.flush();
+		printWriter.println("\r" + ">" + timeStamp() + " GIVE CHANGE $" + preBalance + " $" + balance);
+		printWriter.flush();
 		
 		//run thankYou() to end
 		thankYou();
