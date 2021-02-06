@@ -114,6 +114,8 @@ public class VendingMachine {
 		System.out.println("> (1) Feed Money");
 		System.out.println("> (2) Select Product");
 		System.out.println("> (3) Finish Transaction");
+		System.out.println();
+		System.out.println("Current money provided: $" + balance);
 		
 		String userPurchaseChoice = keyboardInput.nextLine();
 		
