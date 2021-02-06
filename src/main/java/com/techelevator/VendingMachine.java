@@ -1,7 +1,15 @@
 package com.techelevator;
 
+import java.io.File;
+
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class VendingMachine {
@@ -9,13 +17,23 @@ public class VendingMachine {
 	private static Inventory inventory;
 	private static BigDecimal balance = new BigDecimal("0.00");
 	private static Scanner keyboardInput = new Scanner(System.in);
+	private static File log = new File("log.txt");
+	private static FileWriter fileWriter;
 	
-	//main method goes here
-	public static void main(String[] args) throws FileNotFoundException {
+	
+	public static void main(String[] args) throws IOException { //main method goes here
 		
 		
 		//Construct new inventory
 		inventory = new Inventory();
+		fileWriter = new FileWriter(log, true);
+		Date date = new Date();
+		Timestamp timeStamp = new Timestamp(date.getTime());
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+		printWriter.println("\r" + "> " + formatter.format(timeStamp) + " Boot Sequence Initiated");
+		printWriter.close();
+		
 
 		
 		//invoke greeting/welcome banner
@@ -131,6 +149,7 @@ public class VendingMachine {
 		
 		if (dollaDollaBillsYall.equals("1") || dollaDollaBillsYall.equals("2") || dollaDollaBillsYall.equals("5") || dollaDollaBillsYall.equals("10")) {
 			balance = balance.add(new BigDecimal(dollaDollaBillsYall));
+			
 			feedMoney();
 		}
 		else if (dollaDollaBillsYall.toLowerCase().equals("x")) {
@@ -193,6 +212,7 @@ public class VendingMachine {
 				purchaseMenu();
 			}
 			else {
+				inventory.getContents().get(userChoice).push(dispensedItem);
 				System.out.println("You do not have enough balance to buy that!");
 				System.out.println("======== Please insert more money ========");
 				System.out.println();
