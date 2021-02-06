@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class VendingMachine {
 
 	private static Inventory inventory;
+	private static SalesLog salesLog;
 	private static BigDecimal balance = new BigDecimal("0.00");
 	private static Scanner keyboardInput = new Scanner(System.in);
 	private static File log = new File("log.txt");
@@ -27,6 +28,7 @@ public class VendingMachine {
 		
 		//Construct new inventory
 		inventory = new Inventory();
+		salesLog = new SalesLog();
 		fileWriter = new FileWriter(log, true);
 		printWriter = new PrintWriter(fileWriter);
 		printWriter.println("\r" + ">" + timeStamp() + " Boot Sequence Initiated");
@@ -90,6 +92,11 @@ public class VendingMachine {
 			//new method advances program
 		}
 		else if (userChoice.equals("3")) {
+			thankYou();
+		}
+		else if (userChoice.equals("4")) {
+			System.out.println("Generating Sales Report"); //change this?
+			salesLog.printSalesLog(timeStamp());
 			thankYou();
 		}
 		else {
@@ -202,7 +209,7 @@ public class VendingMachine {
 		
 		if (dispensedItem != null) {
 			//determines if balance covers the cost of options
-			if (balance.compareTo(inventory.getContents().get(userChoice).peek().getPrice()) > 0) {
+			if (balance.compareTo(dispensedItem.getPrice()) > 0) {
 				System.out.println(dispensedItem.getName());
 				System.out.println(dispensedItem.getPrice());
 				
@@ -216,6 +223,8 @@ public class VendingMachine {
 				//print to log: time stamp, item name, item position, starting balance, and balance after purchase  >01/01/2016 12:00:20 PM Crunchie B4 $10.00 $8.50
 				printWriter.println("\r" + ">" + timeStamp() + " " + dispensedItem.getName() + " " + userChoice + " $" + preBalance + " $" + balance);
 				printWriter.flush();
+				
+				salesLog.newSale(dispensedItem.getName(), dispensedItem.getPrice());
 
 				purchaseMenu();
 			}
