@@ -295,4 +295,5 @@ public class VendingMachine {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
 		return formatter.format(timeStamp);
 	}
+	
 }
